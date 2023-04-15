@@ -1,0 +1,8 @@
+<p>Your Long URL: 
+    <% target_url = @url['target_url'] %>
+    <a href="<%= target_url %>"><%= target_url %></a>
+</p>
+
+<p>Your shorterned URL: 
+    <a href="<%= target_url %>"><%= @url['short_url'] %></a>
+</p>
