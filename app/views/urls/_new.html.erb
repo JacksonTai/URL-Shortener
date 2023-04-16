@@ -1,0 +1,14 @@
+<%= form_with model: @url, url: urls_path do |form| %>
+    <div class="field">
+        <%= form.label :target_url %>
+        <%= form.text_field :target_url, name: 'url[target_url]' %>
+    </div>
+    <% if @url.errors.full_messages.any? %>
+        <% @url.errors.full_messages.each do |error_message| %>
+            <%= error_message if @url.errors.full_messages.first == error_message %> <br />
+        <% end %>
+    <% end %>
+    <div class="actions">
+        <%= form.submit %>
+    </div>
+<% end %>

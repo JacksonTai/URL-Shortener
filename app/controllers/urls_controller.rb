@@ -2,18 +2,23 @@ require 'securerandom'
 require 'open-uri'
 require 'nokogiri'
 
-class UrlController < ApplicationController
+class UrlsController < ApplicationController
 
     def create
         @url = Url.new(url_params)
-        @url.short_url = generate_short_url
-        @url.title_tag = generate_title_tag(@url.target_url)
-
-        if @url.save
-            redirect_to "/url/show/#{@url.id}"
+        if @url.valid?
+            @url.short_url = generate_short_url
+            @url.title_tag = generate_title_tag(@url.target_url)
+            @url.save
+            redirect_to "/urls/#{@url.id}"
         else
-            render :new
+            puts @url.errors.full_messages
+            render "pages/index", status: :unprocessable_entity
         end
+    end
+
+    def new
+        @url = Url.new
     end
 
     def show
@@ -57,7 +62,7 @@ class UrlController < ApplicationController
         end   
 
         def url_params
-            params.permit(:target_url).permit(:target_url)
+            params.require(:url).permit(:target_url)
         end
 
 end
