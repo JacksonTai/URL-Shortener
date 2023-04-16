@@ -23,6 +23,7 @@ class UrlController < ApplicationController
     def redirect
         @url = Url.find_by(short_url: params[:short_url])
         if @url.present?
+            @url.increment(:clicks).save
             @url.visits.create(originating_geolocation: generate_originating_geolocation)
             redirect_to @url.target_url, allow_other_host: true
         else

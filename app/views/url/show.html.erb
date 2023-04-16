@@ -5,7 +5,7 @@
 
 <p>Your shorterned URL: 
     <% short_url = @url['short_url'] %>
-    <a href="/<%= short_url %>">
+    <a href="/<%= short_url %>" data-turbo="false">
         <%= "#{request.protocol}#{request.host_with_port}/#{short_url}" %>
     </a>
 </p>
