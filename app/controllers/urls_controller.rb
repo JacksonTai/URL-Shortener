@@ -22,17 +22,21 @@ class UrlsController < ApplicationController
     end
 
     def show
-        @url = Url.find(params[:id])
+        begin
+            @url = Url.find(params[:id])
+        rescue
+            render_404
+        end
     end
     
     def redirect
-        @url = Url.find_by(short_url: params[:short_url])
-        if @url.present?
+        begin
+            @url = Url.find_by(short_url: params[:short_url])
             @url.increment(:clicks).save
             @url.visits.create(originating_geolocation: generate_originating_geolocation)
             redirect_to @url.target_url, allow_other_host: true
-        else
-            render plain: "Short URL not found", status: :not_found
+        rescue
+            render_404
         end
     end
 
