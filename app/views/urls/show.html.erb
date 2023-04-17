@@ -1,11 +1,39 @@
-<p>Your Long URL: 
-    <% target_url = @url['target_url'] %>
-    <a href="<%= target_url %>"><%= target_url %></a>
-</p>
+<div class="flex h-screen">
+    <div class="m-auto w-4/5 max-w-2xl">
 
-<p>Your shorterned URL: 
-    <% short_url = @url['short_url'] %>
-    <a href="/<%= short_url %>" data-turbo="false">
-        <%= "#{request.protocol}#{request.host_with_port}/#{short_url}" %>
-    </a>
-</p>
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-2">Voila! Your shortened link</h1>
+            <p>Copy the shortened link and share it in messages, texts, posts, websites and other locations.</p>
+            <%= link_to "Shorten another link", root_path, class: "text-blue-600 hover:underline" %>
+        </div>
+        
+        <div class="my-10">
+            <div class="mb-6">
+                <h2 class="text-xl font-bold mb-1">Short Link</h2>
+                <%= link_to "#{request.protocol}#{request.host_with_port}/#{@url['short_url']}", 
+                            "/#{@url['short_url']}", 
+                            data: {turbo: false},
+                            target: "_blank", 
+                            class: "text-blue-600 hover:underline" %>
+                <p>
+                    <i class="fa-regular fa-lightbulb"></i> 
+                    Check out how your short link is doing with the 
+                    <%= link_to "statistic", urls_statistic_path(@url.id), class: "text-blue-600 hover:underline" %>.
+                </p>
+            </div>
+            <div class="mb-6">
+                <h2 class="text-xl font-bold mb-1">Original Link</h2>
+                <%= link_to @url['target_url'], 
+                            @url['target_url'], 
+                            target: "_blank",
+                            class: "text-blue-600 hover:underline" %>
+            </div>
+            <div class="mb-6">
+                <h2 class="text-xl font-bold mb-1">Page Title</h2>
+                <%= @url['title_tag'] %></span>
+            </div>
+        </div>        
+
+    </div>    
+</div>
+

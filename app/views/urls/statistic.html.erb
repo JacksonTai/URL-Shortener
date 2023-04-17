@@ -1,0 +1,43 @@
+<div class="flex h-screen">
+    <div class="m-auto w-4/5 max-w-2xl">
+
+        <%= link_to "Back", url_path(@url.id), class: "text-blue-600 hover:underline" %>
+        <div class="text-center mt-2">
+            <h1 class="text-4xl font-bold mb-1">Statistics</h1>
+            <p>Discover how your short link: 
+                <%= link_to "#{request.protocol}#{request.host_with_port}/#{@url['short_url']}", 
+                            "/#{@url['short_url']}", 
+                            data: {turbo: false}, 
+                            target: "_blank",
+                            class: "text-blue-600 hover:underline" %> 
+                is doing in real-time!
+            </p>
+            <div class="my-10">
+                <h2 class="text-lg">Number of Clicks</h2>
+                <p class="text-3xl font-bold mb-1"><%= @url['clicks'] %></p>
+            </div>
+        </div>
+        
+        <% if @url.visits.size > 0 %>
+        <h2 class="text-xl font-bold mb-1">Recent Visits</h2>
+        <table class="border border-gray-400 border-collapse w-full text-center">
+            <thead class="bg-gray-200">
+                <tr>
+                <th class="py-2 px-4">Geolocation</th>
+                <th class="py-2 px-4">Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @url.visits.order(created_at: :desc).each do |url| %>
+                <tr>
+                    <td class="py-2 px-4"><%= url.originating_geolocation %></td>
+                    <td class="py-2 px-4"><%= url.created_at %></td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+        <% elsif @url.visits.size == 0 %>
+        <h2 class="text-xl font-bold mb-1 text-center">No one has visited this short link yet.</h2>
+        <% end %>
+    </div>
+</div>

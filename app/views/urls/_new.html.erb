@@ -1,14 +1,18 @@
-<%= form_with model: @url, url: urls_path do |form| %>
-    <div class="field">
-        <%= form.label :target_url %>
-        <%= form.text_field :target_url, name: 'url[target_url]' %>
+<%= form_with model: @url, url: urls_path, class: "max-w-lg m-auto" do |form| %>
+    <div class="flex items-center justify-between border-b border-black py-2 m-auto">
+        <%= form.text_field :target_url, name: 'url[target_url]', 
+        placeholder: "Enter the link here", 
+        class: "w-full mr-3 py-1 px-2 focus:outline-none text-gray-700" 
+        %>
+        <%= form.submit "Shortern", class: "cursor-pointer" %>
     </div>
     <% if @url.errors.full_messages.any? %>
         <% @url.errors.full_messages.each do |error_message| %>
-            <%= error_message if @url.errors.full_messages.first == error_message %> <br />
+            <% if @url.errors.full_messages.first == error_message %>
+                <p class="text-left mt-1  text-red-500">
+                    <i class="fa-solid fa-triangle-exclamation px-2"></i><%= error_message %>
+                </p>
+            <% end %>
         <% end %>
     <% end %>
-    <div class="actions">
-        <%= form.submit %>
-    </div>
 <% end %>

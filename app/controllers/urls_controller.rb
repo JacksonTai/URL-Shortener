@@ -12,7 +12,6 @@ class UrlsController < ApplicationController
             @url.save
             redirect_to "/urls/#{@url.id}"
         else
-            puts @url.errors.full_messages
             render "pages/index", status: :unprocessable_entity
         end
     end
@@ -22,11 +21,11 @@ class UrlsController < ApplicationController
     end
 
     def show
-        begin
-            @url = Url.find(params[:id])
-        rescue
-            render_404
-        end
+        @url = find_url
+    end     
+
+    def statistic
+        @url = find_url
     end
     
     def redirect
@@ -64,6 +63,14 @@ class UrlsController < ApplicationController
             results = Geocoder.search(ip_address).first
             return "#{results.city}, #{results.country}"
         end   
+
+        def find_url
+            begin
+                Url.find(params[:id])
+            rescue
+                render_404
+            end
+        end
 
         def url_params
             params.require(:url).permit(:target_url)

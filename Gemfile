@@ -73,3 +73,4 @@ end
 
 gem "nokogiri"
 gem "geocoder"
+gem "tailwindcss-rails", "~> 2.0"
