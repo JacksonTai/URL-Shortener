@@ -2,10 +2,8 @@
 
 one:
   originating_geolocation: MyString
-  string: MyString
-  url: one
+  short_url: one
 
 two:
   originating_geolocation: MyString
-  string: MyString
-  url: two
+  short_url: two

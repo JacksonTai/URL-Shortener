@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
 
     def index
-        @url = Url.new
+        @short_url = ShortUrl.new
     end
 
 end

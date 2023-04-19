@@ -1,3 +1,3 @@
 class Visit < ApplicationRecord
-    belongs_to :url
+  belongs_to :short_url
 end

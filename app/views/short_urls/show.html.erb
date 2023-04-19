@@ -10,27 +10,29 @@
         <div class="my-10">
             <div class="mb-6">
                 <h2 class="text-xl font-bold mb-1">Short Link</h2>
-                <%= link_to "#{request.protocol}#{request.host_with_port}/#{@url['short_url']}", 
-                            "/#{@url['short_url']}", 
+                <%= link_to "#{request.protocol}#{request.host_with_port}/#{@short_url['short_code']}", 
+                            "/#{@short_url['short_code']}", 
                             data: {turbo: false},
                             target: "_blank", 
                             class: "text-blue-600 hover:underline" %>
                 <p>
                     <i class="fa-regular fa-lightbulb"></i> 
                     Check out how your short link is doing with the 
-                    <%= link_to "statistic", urls_statistic_path(@url.id), class: "text-blue-600 hover:underline" %>.
+                    <%= link_to "statistic", 
+                                short_urls_statistic_path(@short_url.id), 
+                                class: "text-blue-600 hover:underline" %>.
                 </p>
             </div>
             <div class="mb-6">
                 <h2 class="text-xl font-bold mb-1">Original Link</h2>
-                <%= link_to @url['target_url'], 
-                            @url['target_url'], 
+                <%= link_to @short_url['target_url'], 
+                            @short_url['target_url'], 
                             target: "_blank",
                             class: "text-blue-600 hover:underline" %>
             </div>
             <div class="mb-6">
                 <h2 class="text-xl font-bold mb-1">Page Title</h2>
-                <%= @url['title_tag'] %></span>
+                <%= @short_url['title_tag'] %></span>
             </div>
         </div>        
 
