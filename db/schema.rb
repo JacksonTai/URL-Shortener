@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_16_040133) do
-  create_table "urls", force: :cascade do |t|
+ActiveRecord::Schema[7.0].define(version: 2023_04_19_105337) do
+  create_table "short_urls", force: :cascade do |t|
     t.string "target_url"
-    t.string "short_url"
+    t.string "short_code"
     t.string "title_tag"
-    t.string "geolocation"
     t.integer "clicks", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -23,12 +22,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_16_040133) do
 
   create_table "visits", force: :cascade do |t|
     t.string "originating_geolocation"
-    t.string "string"
     t.integer "url_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["url_id"], name: "index_visits_on_url_id"
   end
 
-  add_foreign_key "visits", "urls"
+  add_foreign_key "visits", "short_urls", column: "url_id"
 end
