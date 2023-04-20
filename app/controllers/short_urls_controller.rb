@@ -27,11 +27,17 @@ class ShortUrlsController < ApplicationController
     end
 
     def show
-        @short_url = find_short_url
+        @short_url = ShortUrl.find_by(short_code: params[:short_code])
+        if !@short_url.present?
+            render_404
+        end
     end     
 
     def statistic
-        @short_url = find_short_url
+        @short_url = ShortUrl.find_by(short_code: params[:short_code])
+        if !@short_url.present?
+            render_404
+        end
     end
     
     def redirect
@@ -69,14 +75,6 @@ class ShortUrlsController < ApplicationController
             results = Geocoder.search(ip_address).first
             return "#{results.city}, #{results.country}"
         end   
-
-        def find_short_url
-            begin
-                ShortUrl.find_by(short_code: params[:short_code])
-            rescue
-                render_404
-            end
-        end
 
         def short_url_params
             params.require(:short_url).permit(:target_url, :short_code)
