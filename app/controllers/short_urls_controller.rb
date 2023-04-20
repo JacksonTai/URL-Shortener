@@ -10,7 +10,7 @@ class ShortUrlsController < ApplicationController
             @short_url.short_code = generate_short_code
             @short_url.title_tag = generate_title_tag(@short_url.target_url)
             @short_url.save
-            redirect_to "/short_urls/#{@short_url.id}"
+            redirect_to short_url_path(@short_url.short_code)
         else
             render "pages/index", status: :unprocessable_entity
         end
@@ -66,14 +66,14 @@ class ShortUrlsController < ApplicationController
 
         def find_short_url
             begin
-                ShortUrl.find(params[:id])
+                ShortUrl.find_by(short_code: params[:short_code])
             rescue
                 render_404
             end
         end
 
         def short_url_params
-            params.require(:short_url).permit(:target_url)
+            params.require(:short_url).permit(:target_url, :short_code)
         end
 
 end
