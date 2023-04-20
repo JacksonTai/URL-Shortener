@@ -8,7 +8,12 @@ class ShortUrlsController < ApplicationController
         @short_url = ShortUrl.new(short_url_params)
         if @short_url.valid?
             @short_url.short_code = generate_short_code
-            @short_url.title_tag = generate_title_tag(@short_url.target_url)
+            
+            title_tag = generate_title_tag(@short_url.target_url)
+            if title_tag.present?
+                @short_url.title_tag = title_tag
+            end
+
             @short_url.save
             redirect_to short_url_path(@short_url.short_code)
         else
@@ -55,7 +60,7 @@ class ShortUrlsController < ApplicationController
             html = URI.open(target_url)
             doc = Nokogiri::HTML(html)
             title_node_set = doc.css('title')
-            return title_node_set.empty? ? "Untitled page" : title_node_set.text
+            return title_node_set.empty? ? nil : title_node_set.text
         end
 
         def generate_originating_geolocation

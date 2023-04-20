@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_19_125409) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_20_024423) do
   create_table "short_urls", force: :cascade do |t|
     t.string "target_url"
     t.string "short_code"
-    t.string "title_tag"
+    t.string "title_tag", default: "Untitled Page"
     t.integer "clicks", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
