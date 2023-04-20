@@ -6,7 +6,8 @@ class ShortUrlsController < ApplicationController
 
     def create
         @short_url = ShortUrl.new(short_url_params)
-        if @short_url.valid?
+
+        if @short_url.validate(:target_url)
             @short_url.short_code = generate_short_code
             
             title_tag = generate_title_tag(@short_url.target_url)
