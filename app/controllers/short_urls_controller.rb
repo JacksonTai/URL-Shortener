@@ -41,11 +41,11 @@ class ShortUrlsController < ApplicationController
 
     private      
         def generate_short_code()
-            short_code = SecureRandom.hex(5)[0, 15]
+            short_code = SecureRandom.hex(3)[0, 15]
 
             # Check if the short code is already taken
             while ShortUrl.find_by(short_code: short_code).present?
-                short_code = SecureRandom.hex(5)[0, 15]
+                short_code = SecureRandom.hex(3)[0, 15]
             end
 
             return short_code
