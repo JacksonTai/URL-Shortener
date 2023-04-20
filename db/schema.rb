@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_20_071244) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_20_104401) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "short_urls", force: :cascade do |t|
     t.string "target_url"
     t.string "short_code"
@@ -22,9 +25,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_071244) do
 
   create_table "visits", force: :cascade do |t|
     t.string "originating_geolocation"
+    t.bigint "short_url_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "short_url_id", null: false
     t.index ["short_url_id"], name: "index_visits_on_short_url_id"
   end
 
