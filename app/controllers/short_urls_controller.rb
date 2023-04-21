@@ -8,6 +8,7 @@ class ShortUrlsController < ApplicationController
         @short_url = ShortUrl.new(short_url_params)
 
         if @short_url.validate(:target_url)
+            @short_url.target_url = @short_url.target_url.gsub(/[[:space:]]/, '') 
             @short_url.short_code = generate_short_code
             
             title_tag = generate_title_tag(@short_url.target_url)
@@ -64,10 +65,14 @@ class ShortUrlsController < ApplicationController
         end
 
         def generate_title_tag(target_url)
-            html = URI.open(target_url)
-            doc = Nokogiri::HTML(html)
-            title_node_set = doc.css('title')
-            return title_node_set.empty? ? nil : title_node_set.text
+            begin
+                html = URI.open(target_url)
+                doc = Nokogiri::HTML(html)
+                title_node_set = doc.css('title')
+                return title_node_set.empty? ? nil : title_node_set.text
+            rescue
+                return nil
+            end
         end
 
         def generate_originating_geolocation
