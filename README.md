@@ -16,7 +16,7 @@ Follow these steps to install and run the URL Shortener application:
     git clone https://github.com/JacksonTai/url-shortener.git
     ```
 
-2. Change directory to `url-shortener` and install the dependencies:
+2. Change directory to `url-shortener` and install the dependencies (Gem):
     ```
     cd url-shortener
     bundle install
